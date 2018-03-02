@@ -49,9 +49,9 @@ If you need to send messages to multiple recipients, it's worthwhile to read tho
 
 The SNS service implements the [Publish-Subscribe](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) pattern, and you can use it to send messages to a topic. Here are the steps to make this work:
 
-    Create a named topic. This is just a commuication channel to which you can subscribe phone numbers.
-    Subscibe your recipients to the topic.
-    Publish a message on the topic.
+1. Create a named topic. This is just a commuication channel to which you can subscribe phone numbers.
+2. Subscibe your recipients to the topic.
+3. Publish a message on the topic.
 
 The python code looks something like this:
 
