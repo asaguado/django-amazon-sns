@@ -1,10 +1,22 @@
-# -*- coding: utf-8 -*-
+# An example of how to use AWS SNS with Python's boto
+# By Alfredo Sanchez @asaguado
+# Publish on March 2018
+# http://aws.amazon.com/sns/
+# https://boto3.readthedocs.io/en/latest/reference/services/sns.html
+# https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html
+
+
 import boto3
 
+
 # AWS Credentials
-AWS_ACCESS_KEY_ID = "YOUR ACCES KEY"
-AWS_SECRET_ACCESS_KEY = "YOUR SECRET KEY"
+AWS_ACCESS_KEY_ID = "<REPLACE_WITH_AWS_ACCESS_KEY_ID>"
+AWS_SECRET_ACCESS_KEY = "<REPLACE_WITH_AWS_SECRET_ACCESS_KEY>"
 AWS_REGION_NAME = "eu-west-1"
+
+SENDER_ID = "<REPLACE_WITH_SENDER_ID>"
+SMS_MESSAGE = "<REPLACE_WITH_MESSAGE>"
+
 
 # Create an SNS client
 client = boto3.client(
@@ -33,4 +45,21 @@ for number in some_list_of_contacts:
     )
 
 # Publish a message.
-client.publish(Message="Good news everyone!", TopicArn=topic_arn)
+response = client.publish(
+    Message=SMS_MESSAGE,
+    TopicArn=topic_arn,
+    MessageAttributes={
+        'string': {
+            'DataType': 'String',
+            'StringValue': 'String',
+        },
+        'AWS.SNS.SMS.SenderID': {
+            'DataType': 'String',
+            'StringValue': SENDER_ID
+        }
+    }
+)
+
+print(response)
+print("MessageId:" + response["MessageId"])
+print("HTTPStatusCode:" + str(response["ResponseMetadata"]["HTTPStatusCode"]))
