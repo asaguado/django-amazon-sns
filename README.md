@@ -35,7 +35,12 @@ client = boto3.client(
 # Send your sms message.
 client.publish(
     PhoneNumber="+12223334444",
-    Message="Hello World!"
+    Message="Hello World!",
+    'AWS.SNS.SMS.SenderID': {
+            'DataType': 'String',
+            'StringValue': "YOUR SENDER ID"
+        }
+    }
 )
 ```
 
@@ -76,6 +81,11 @@ for number in some_list_of_contacts:
         TopicArn=topic_arn,
         Protocol='sms',
         Endpoint=number  # <-- number who'll receive an SMS message.
+        'AWS.SNS.SMS.SenderID': {
+            'DataType': 'String',
+            'StringValue': "YOUR SENDER ID"
+        }
+    }
     )
 
 # Publish a message.
